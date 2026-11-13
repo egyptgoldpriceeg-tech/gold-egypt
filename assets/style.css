@@ -1,0 +1,34 @@
+:root{--bg:#fffaf0;--fg:#2a2210;--card:#fff;--gold:#b8860b;--gold2:#e6b422;--line:#ecdcae;--up:#18853b;--dn:#c62828}
+@media(prefers-color-scheme:dark){:root{--bg:#14110a;--fg:#f4ead0;--card:#1e1a10;--gold:#e6b422;--gold2:#ffd54a;--line:#3a3115;--up:#2ecc71;--dn:#ff6b6b}}
+*{box-sizing:border-box}
+body{margin:0;font-family:Tahoma,'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--fg);line-height:1.8}
+header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;padding:12px 16px;background:linear-gradient(135deg,#8a6508,#e6b422)}
+header a{color:#fff;text-decoration:none;font-weight:700;margin-inline-start:14px}
+header .logo{font-size:1.2rem;margin:0}
+main{max-width:960px;margin:auto;padding:16px}
+.hero{text-align:center}
+h1{margin:.4em 0 0;font-size:1.6rem;line-height:1.5;color:var(--gold)}
+#upd{margin:.2em 0 1em;opacity:.8;font-size:.9rem}
+.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+@media(min-width:700px){.cards{grid-template-columns:repeat(4,1fr)}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;text-align:center;min-height:130px}
+.card.main{border:2px solid var(--gold2);box-shadow:0 4px 14px rgba(230,180,34,.25)}
+.card span{display:block;font-weight:700}
+.card b{display:block;font-size:2rem;color:var(--gold);font-variant-numeric:tabular-nums}
+.card small{opacity:.7}
+.card i{display:block;font-style:normal;font-weight:700;min-height:1.6em}
+.up{color:var(--up)}.dn{color:var(--dn)}
+.note{font-size:.85rem;opacity:.8;text-align:center}
+.box{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin:16px 0}
+.box h1,.box h2,.box h3{color:var(--gold);margin-top:0}
+.box h2{font-size:1.25rem}
+.tools{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px}
+.tools button,.tools select{padding:6px 14px;border:1px solid var(--line);border-radius:20px;background:var(--bg);color:var(--fg);font:inherit;cursor:pointer}
+.tools button.on{background:var(--gold2);color:#222;font-weight:700}
+#chart{min-height:260px;direction:ltr}
+#chart svg{width:100%;height:auto;display:block}
+table{width:100%;border-collapse:collapse}
+th,td{border:1px solid var(--line);padding:8px;text-align:center}
+th{background:var(--line)}
+footer{text-align:center;padding:20px 12px;font-size:.9rem;border-top:1px solid var(--line)}
+footer a,main a{color:var(--gold)}
