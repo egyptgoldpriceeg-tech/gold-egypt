@@ -1,0 +1,21 @@
+name: fix-urls
+on: workflow_dispatch
+permissions:
+  contents: write
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Replace old domain
+        run: |
+          (grep -rl 'egyptgoldprice.pages.dev' . --exclude-dir=.git --exclude-dir=.github || true) | xargs -r sed -i 's/egyptgoldprice\.pages\.dev/gold-egypt-2wf.pages.dev/g'
+      - name: Commit and push
+        run: |
+          git config user.name "price-bot"
+          git config user.email "price-bot@users.noreply.github.com"
+          git add -A
+          git diff --cached --quiet || git commit -m "fix site urls"
+          git pull --rebase --autostash
+          git push
