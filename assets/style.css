@@ -1,34 +1,132 @@
-:root{--bg:#fffaf0;--fg:#2a2210;--card:#fff;--gold:#b8860b;--gold2:#e6b422;--line:#ecdcae;--up:#18853b;--dn:#c62828}
-@media(prefers-color-scheme:dark){:root{--bg:#14110a;--fg:#f4ead0;--card:#1e1a10;--gold:#e6b422;--gold2:#ffd54a;--line:#3a3115;--up:#2ecc71;--dn:#ff6b6b}}
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap');
+
+:root{
+  --bg:#faf7f0;--bg2:#f3ede0;--fg:#1f1a0e;--muted:#6b6247;
+  --card:#ffffff;--gold:#9a6f06;--gold2:#d4a017;--gold3:#f0c64a;
+  --line:#e8dcc0;--up:#15803d;--dn:#b91c1c;
+  --shadow:0 1px 2px rgba(60,40,0,.06),0 10px 28px rgba(60,40,0,.09);
+  --radius:16px;
+}
+@media(prefers-color-scheme:dark){
+  :root{
+    --bg:#0e0c07;--bg2:#15120a;--fg:#f5ecd6;--muted:#b3a57e;
+    --card:#1a160c;--gold:#e9bb3a;--gold2:#f0c64a;--gold3:#ffe08a;
+    --line:#2f2813;--up:#34d27b;--dn:#ff7a7a;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 12px 32px rgba(0,0,0,.4);
+  }
+}
+
 *{box-sizing:border-box}
-body{margin:0;font-family:Tahoma,'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--fg);line-height:1.8}
-header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;padding:12px 16px;background:linear-gradient(135deg,#8a6508,#e6b422)}
-header a{color:#fff;text-decoration:none;font-weight:700;margin-inline-start:14px}
-header .logo{font-size:1.2rem;margin:0}
-main{max-width:960px;margin:auto;padding:16px}
-.hero{text-align:center}
-h1{margin:.4em 0 0;font-size:1.6rem;line-height:1.5;color:var(--gold)}
-#upd{margin:.2em 0 1em;opacity:.8;font-size:.9rem}
-.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-@media(min-width:700px){.cards{grid-template-columns:repeat(4,1fr)}}
-.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;text-align:center;min-height:130px}
-.card.main{border:2px solid var(--gold2);box-shadow:0 4px 14px rgba(230,180,34,.25)}
-.card span{display:block;font-weight:700}
-.card b{display:block;font-size:2rem;color:var(--gold);font-variant-numeric:tabular-nums}
-.card small{opacity:.7}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family:'Cairo',Tahoma,'Segoe UI',Arial,sans-serif;
+  background:var(--bg);
+  background-image:radial-gradient(900px 400px at 50% -100px,rgba(212,160,23,.14),transparent);
+  color:var(--fg);line-height:1.9;font-size:17px;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:var(--gold);text-underline-offset:3px}
+a:focus-visible,button:focus-visible,select:focus-visible{outline:3px solid var(--gold2);outline-offset:2px}
+
+/* الهيدر */
+header{
+  position:sticky;top:0;z-index:20;
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px 16px;
+  padding:12px 20px;
+  background:#17110a;
+  border-bottom:2px solid var(--gold2);
+  box-shadow:0 4px 18px rgba(0,0,0,.25);
+}
+header .logo{
+  font-size:1.3rem;font-weight:800;text-decoration:none;margin:0;
+  background:linear-gradient(135deg,#f6d878,#d4a017);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+header nav{display:flex;flex-wrap:wrap;gap:4px}
+header nav a{
+  color:#f3e6c0;text-decoration:none;font-weight:600;font-size:.98rem;
+  padding:6px 14px;border-radius:999px;transition:.2s;
+}
+header nav a:hover{background:rgba(240,198,74,.16);color:#ffe08a}
+
+main{max-width:980px;margin:auto;padding:24px 16px 40px}
+
+/* أعلى الصفحة */
+.hero{text-align:center;padding:8px 0 4px}
+h1{margin:.3em 0 .1em;font-size:clamp(1.5rem,4.5vw,2.3rem);line-height:1.5;font-weight:800;color:var(--gold)}
+#upd{margin:.2em 0 1.2em;color:var(--muted);font-size:.92rem}
+#stale{color:var(--dn);font-weight:600}
+
+/* كروت الأسعار */
+.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+@media(min-width:760px){.cards{grid-template-columns:repeat(4,1fr)}}
+.card{
+  position:relative;overflow:hidden;
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:18px 12px;text-align:center;min-height:140px;box-shadow:var(--shadow);
+  transition:transform .2s,box-shadow .2s;
+}
+.card:hover{transform:translateY(-3px)}
+.card::before{content:"";position:absolute;inset:0 0 auto 0;height:4px;background:linear-gradient(90deg,var(--gold),var(--gold3))}
+.card.main{
+  border:2px solid var(--gold2);
+  background:linear-gradient(180deg,rgba(240,198,74,.16),var(--card) 70%);
+}
+.card span{display:block;font-weight:700;color:var(--muted);font-size:1rem}
+.card b{display:block;font-size:clamp(1.7rem,5vw,2.3rem);font-weight:800;color:var(--gold);font-variant-numeric:tabular-nums;line-height:1.5}
+.card small{color:var(--muted);font-size:.85rem}
 .card i{display:block;font-style:normal;font-weight:700;min-height:1.6em}
 .up{color:var(--up)}.dn{color:var(--dn)}
-.note{font-size:.85rem;opacity:.8;text-align:center}
-.box{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin:16px 0}
-.box h1,.box h2,.box h3{color:var(--gold);margin-top:0}
-.box h2{font-size:1.25rem}
-.tools{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px}
-.tools button,.tools select{padding:6px 14px;border:1px solid var(--line);border-radius:20px;background:var(--bg);color:var(--fg);font:inherit;cursor:pointer}
-.tools button.on{background:var(--gold2);color:#222;font-weight:700}
+
+.note{font-size:.88rem;color:var(--muted);text-align:center;margin:14px 0}
+
+/* الصناديق */
+.box{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:22px;margin:22px 0;box-shadow:var(--shadow);
+}
+.box h1,.box h2,.box h3{color:var(--gold);margin-top:0;line-height:1.5}
+.box h2{
+  font-size:1.35rem;font-weight:800;margin-top:1.6em;
+  border-inline-start:5px solid var(--gold2);padding-inline-start:12px;
+}
+.box h2:first-child{margin-top:0}
+.box h3{font-size:1.1rem;font-weight:700;color:var(--fg)}
+.box p{margin:.7em 0}
+.box ul,.box ol{padding-inline-start:1.4em}
+.box li{margin:.35em 0}
+
+/* أدوات الرسم البياني */
+.tools{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+.tools button,.tools select{
+  padding:8px 18px;border:1px solid var(--line);border-radius:999px;
+  background:var(--bg2);color:var(--fg);font:inherit;font-size:.95rem;cursor:pointer;transition:.2s;
+}
+.tools button:hover,.tools select:hover{border-color:var(--gold2)}
+.tools button.on{background:linear-gradient(135deg,var(--gold2),var(--gold3));color:#2a2005;font-weight:800;border-color:transparent}
 #chart{min-height:260px;direction:ltr}
 #chart svg{width:100%;height:auto;display:block}
-table{width:100%;border-collapse:collapse}
-th,td{border:1px solid var(--line);padding:8px;text-align:center}
-th{background:var(--line)}
-footer{text-align:center;padding:20px 12px;font-size:.9rem;border-top:1px solid var(--line)}
-footer a,main a{color:var(--gold)}
+
+/* الجداول */
+table{width:100%;border-collapse:separate;border-spacing:0;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+th,td{padding:11px 10px;text-align:center;border-bottom:1px solid var(--line)}
+tr:last-child td{border-bottom:0}
+th{background:var(--bg2);color:var(--gold);font-weight:800}
+tbody tr:nth-child(even) td,tr:nth-child(even) td{background:rgba(212,160,23,.05)}
+
+/* الفوتر */
+footer{
+  text-align:center;padding:28px 14px;font-size:.92rem;color:var(--muted);
+  border-top:1px solid var(--line);background:var(--bg2);
+}
+footer a{color:var(--gold);text-decoration:none;font-weight:600}
+footer a:hover{text-decoration:underline}
+footer p{margin:.4em 0}
+
+@media(max-width:560px){
+  body{font-size:16px}
+  header{padding:10px 12px;justify-content:center}
+  header nav{justify-content:center}
+  .box{padding:16px}
+}
