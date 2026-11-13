@@ -55,37 +55,33 @@ function chart() {
     box.textContent = 'الرسم البياني هيظهر بعد ما تتجمع بيانات كفاية، ارجع بعد كام ساعة.';
     return;
   }
-  const W = 600, H = 260, P = 46;
+  const W = 600, H = 260, P = 60, B = 30, T = 16;
   const v = pts.map((p) => p[key]);
   const mn = Math.min(...v), mx = Math.max(...v), sp = mx - mn || 1;
-  const x = (i) => P + (i * (W - P - 10)) / (pts.length - 1);
-  const y = (n) => H - 28 - ((n - mn) / sp) * (H - 60);
+  const x = (i) => P + (i * (W - P - 16)) / (pts.length - 1);
+  const y = (n) => H - B - ((n - mn) / sp) * (H - B - T);
   const path = 'M' + pts.map((p, i) => x(i).toFixed(1) + ',' + y(p[key]).toFixed(1)).join('L');
-  const up = v[v.length - 1] >= v[0];
-  const col = up ? '#18853b' : '#c62828';
+  const gold = '#c9971c';
+  const muted = '#6e6e73';
   const fd = (p) => new Date(p.t).toLocaleDateString('ar-EG-u-nu-latn', { timeZone: TZ, day: 'numeric', month: 'short' });
+  const last = pts[pts.length - 1];
+  const grid = [0, 0.5, 1].map((t) => {
+    const val = mn + sp * t, yy = y(val).toFixed(1);
+    return "<line x1='" + P + "' x2='" + (W - 16) + "' y1='" + yy + "' y2='" + yy + "' stroke='#e3e3e0' stroke-width='1'/>" +
+      "<text x='" + (P - 8) + "' y='" + (+yy + 4) + "' text-anchor='end'>" + f(val) + '</text>';
+  }).join('');
   box.innerHTML =
     "<svg viewBox='0 0 " + W + ' ' + H + "' role='img' aria-label='رسم بياني لسعر الذهب'>" +
-    "<path d='" + path + ' L' + x(pts.length - 1).toFixed(1) + ',' + (H - 28) + ' L' + P + ',' + (H - 28) + " Z' fill='" + col + "' opacity='.12'/>" +
-    "<path d='" + path + "' fill='none' stroke='" + col + "' stroke-width='2.5' stroke-linejoin='round'/>" +
-    "<g fill='currentColor' font-size='12' opacity='.75'>" +
-    "<text x='4' y='" + (y(mx) + 4) + "'>" + f(mx) + '</text>' +
-    "<text x='4' y='" + (y(mn) + 4) + "'>" + f(mn) + '</text>' +
-    "<text x='" + P + "' y='" + (H - 6) + "'>" + fd(pts[0]) + '</text>' +
-    "<text x='" + (W - 10) + "' y='" + (H - 6) + "' text-anchor='end'>" + fd(pts[pts.length - 1]) + '</text></g></svg>';
+    "<defs><linearGradient id='gfill' x1='0' y1='0' x2='0' y2='1'>" +
+    "<stop offset='0%' stop-color='" + gold + "' stop-opacity='.32'/>" +
+    "<stop offset='100%' stop-color='" + gold + "' stop-opacity='0'/></linearGradient></defs>" +
+    "<g fill='" + muted + "' font-size='12' font-family='Cairo,Tahoma,sans-serif'>" + grid + '</g>' +
+    "<path d='" + path + ' L' + x(pts.length - 1).toFixed(1) + ',' + (H - B) + ' L' + P + ',' + (H - B) + " Z' fill='url(#gfill)'/>" +
+    "<path d='" + path + "' fill='none' stroke='" + gold + "' stroke-width='3' stroke-linejoin='round' stroke-linecap='round'/>" +
+    "<circle cx='" + x(pts.length - 1).toFixed(1) + "' cy='" + y(last[key]).toFixed(1) + "' r='5' fill='" + gold + "' stroke='#fff' stroke-width='2.5'/>" +
+    "<g fill='" + muted + "' font-size='12' font-family='Cairo,Tahoma,sans-serif'>" +
+    "<text x='" + P + "' y='" + (H - 8) + "'>" + fd(pts[0]) + '</text>' +
+    "<text x='" + (W - 16) + "' y='" + (H - 8) + "' text-anchor='end'>" + fd(last) + '</text></g></svg>';
 }
 
 document.querySelectorAll('[data-r]').forEach((b) =>
-  b.addEventListener('click', () => {
-    range = +b.dataset.r;
-    document.querySelectorAll('[data-r]').forEach((x) => x.classList.toggle('on', x === b));
-    if (db) chart();
-  })
-);
-$('#k').addEventListener('change', (e) => {
-  key = e.target.value;
-  if (db) chart();
-});
-
-load();
-setInterval(load, 600000);
