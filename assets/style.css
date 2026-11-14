@@ -129,3 +129,17 @@ footer p{margin:.4em 0}
   header nav{justify-content:center}
   .box{padding:18px}
 }
+
+
+/* الموبايل: هيدر مضغوط وأزرار دهبية */
+@media(max-width:640px){
+  header{flex-direction:column;align-items:stretch;flex-wrap:nowrap;gap:6px;padding:8px 10px 10px}
+  header .logo{text-align:center;font-size:1.1rem;line-height:1.5}
+  header nav{display:grid;grid-template-columns:repeat(auto-fit,minmax(68px,1fr));gap:6px;width:100%}
+  header nav a{display:block;text-align:center;white-space:nowrap;font-size:.82rem;font-weight:700;line-height:1.5;padding:5px 2px;border-radius:10px;color:var(--gold);background:linear-gradient(180deg,#fffaf0,#fbefc9);border:1px solid var(--gold3);box-shadow:0 1px 2px rgba(201,151,28,.15)}
+  header nav a:hover,header nav a:active{background:linear-gradient(135deg,var(--gold2),var(--gold3));color:#2a2005;border-color:transparent}
+  main{padding-top:14px}
+  .hero{padding:0}
+  .hero h1{margin:.1em 0 0;font-size:1.35rem;line-height:1.5}
+  #upd{margin:.2em 0 .9em;font-size:.82rem}
+}
